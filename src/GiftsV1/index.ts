@@ -76,10 +76,13 @@ export default class GiftV1 {
             },
           })
 
+          const gifts = await this.prisma.gift.findMany()
+
           return response.code(200).send({
             message: `Muito obrigado ${personName} por escolher um presente para o casal`,
             showBuyButton: !!personName,
-            buyMessage: 'Gostaria de comprar agora?'
+            buyMessage: 'Gostaria de comprar agora?',
+            gifts,
           })
         } catch (error) {
           return {
