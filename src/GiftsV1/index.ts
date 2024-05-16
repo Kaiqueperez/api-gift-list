@@ -24,6 +24,7 @@ export default class GiftV1 {
     this.getGitftsByPersonName()
     this.updateGitf()
     this.getAllGifts()
+    this.deleteAllData()
   }
 
   private async createGiftOnDataBase() {
@@ -37,7 +38,8 @@ export default class GiftV1 {
 
       if (!name.trim() || !url.trim().includes('http')) {
         return response.code(400).send({
-          message: 'O campo Link do desejo e nome são obrigátorios',
+          message:
+            'O campo Link do desejo precisa receber um link válido e o campo nome não pode estar vazio',
           code: response.statusCode,
         })
       }
@@ -150,6 +152,28 @@ export default class GiftV1 {
           return await response.send(gifts)
         } catch (error) {
           return await response.code(404)
+        }
+      }
+    )
+  }
+
+  private async deleteAllData() {
+    this.fastify.delete(
+      `${this.BASE_URL}/products/delete`,
+      async (_, response) => {
+        await this.prisma.gift.deleteMany({})
+        const emptyList = await this.prisma.gift.findMany()
+        try {
+          return {
+            code: response.statusCode,
+            message: 'Os produtos foram deletados com sucesso',
+            emptyList,
+          }
+        } catch (error) {
+          return {
+            code: response.statusCode,
+            message: error,
+          }
         }
       }
     )
