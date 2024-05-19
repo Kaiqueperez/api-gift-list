@@ -20,4 +20,6 @@ model Gift {
   choosen Boolean?
   personName String?
   url String
+  imageUrl String
+  description String
 }

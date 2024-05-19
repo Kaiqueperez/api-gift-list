@@ -3,6 +3,8 @@ import { z } from 'zod'
 const giftSchema = z.object({
   name: z.string(),
   url: z.string(),
+  imageUrl: z.string(),
+  description: z.string()
 })
 
 const gifterSchema = z.object({

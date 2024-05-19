@@ -29,17 +29,29 @@ export default class GiftV1 {
 
   private async createGiftOnDataBase() {
     this.fastify.post(`${this.BASE_URL}/product`, async (request, response) => {
-      const { name, url } = giftSchema.parse(request.body)
+      const { name, url, imageUrl, description } = giftSchema.parse(
+        request.body
+      )
 
       const gift = {
         name,
         url,
+        imageUrl,
+        description,
       }
 
-      if (!name.trim() || !url.trim().includes('http')) {
+      if (
+        !name.trim() ||
+        !url.trim().includes('http') ||
+        !imageUrl.trim() ||
+        !description.trim()
+      ) {
         return response.code(400).send({
-          message:
-            'O campo Link do desejo precisa receber um link válido e o campo nome não pode estar vazio',
+          message: `Vefique os campos, eles não pode ser enviados vazios: ${
+            name ? name : 'Campo nome está vazio'
+          }, ${url ? url : 'Campo url está vazio'}, ${
+            imageUrl ? imageUrl : 'Campo imagem está vazio'
+          }, ${description ? description : 'Campo descrição está vazio'}`,
           code: response.statusCode,
         })
       }
