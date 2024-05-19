@@ -7,4 +7,4 @@
 */
 -- AlterTable
 ALTER TABLE "Gift" ADD COLUMN     "description" TEXT NOT NULL,
-ADD COLUMN     "imageUrl" TEXT NOT NULL;
+ALTER TABLE "Gift" ADD COLUMN     "imageUrl" TEXT NOT NULL;
