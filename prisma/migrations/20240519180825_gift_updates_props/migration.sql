@@ -5,6 +5,9 @@ CREATE TABLE "Gift" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "choosen" BOOLEAN,
     "personName" TEXT,
+    "url" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
 
     CONSTRAINT "Gift_pkey" PRIMARY KEY ("id")
 );
