@@ -24,7 +24,7 @@ export default class GiftV1 {
     this.getGitftsByPersonName()
     this.updateGitf()
     this.getAllGifts()
-    this.deleteAllData()
+    this.deleteGiftById()
   }
 
   private async createGiftOnDataBase() {
@@ -169,17 +169,19 @@ export default class GiftV1 {
     )
   }
 
-  private async deleteAllData() {
+  private async deleteGiftById() {
     this.fastify.delete(
-      `${this.BASE_URL}/products/delete`,
-      async (_, response) => {
-        await this.prisma.gift.deleteMany({})
-        const emptyList = await this.prisma.gift.findMany()
+      `${this.BASE_URL}/products/delete/:id`,
+      async (request, response) => {
+        const { id } = idSchema.parse(request.params)
+        await this.prisma.gift.delete({
+          where: { id },
+        })
+
         try {
           return {
             code: response.statusCode,
-            message: 'Os produtos foram deletados com sucesso',
-            emptyList,
+            message: 'O produto foi deletado com sucesso',
           }
         } catch (error) {
           return {
