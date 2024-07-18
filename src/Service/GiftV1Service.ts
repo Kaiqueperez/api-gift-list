@@ -35,6 +35,7 @@ export default class GiftV1Service {
 
   public async updateGiftService(personData: GiftUpdate) {
     const { id, personName, choosen } = personData
+
     try {
       await this.prisma.gift.update({
         where: {
@@ -46,7 +47,9 @@ export default class GiftV1Service {
         },
       })
 
-      return { hasError: false }
+      const gifts = await this.prisma.gift.findMany()
+
+      return { hasError: false, gifts }
     } catch (error) {
       return { hasError: true, error }
     }

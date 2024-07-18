@@ -1,21 +1,20 @@
 import { fastifyCors } from '@fastify/cors'
-import { PrismaClient } from '@prisma/client'
 import { FastifyInstance } from 'fastify'
 import { giftSchema, gifterSchema, idSchema, isChoosenSchema } from '../schemas'
 import GiftV1Service from '../Service/GiftV1Service'
 
 export default class GiftV1 {
   public fastify
-  public prisma
+
   public service
   public BASE_URL = '/gifts/v1'
   constructor(
     fastify: FastifyInstance,
-    prisma: PrismaClient,
+
     service: GiftV1Service
   ) {
     this.fastify = fastify
-    this.prisma = prisma
+
     this.service = service
     this.fastify.register(fastifyCors, {
       origin: '*',
@@ -89,7 +88,7 @@ export default class GiftV1 {
           choosen,
         }
 
-        const { hasError, error } = await this.service.updateGiftService(
+        const { hasError, error, gifts } = await this.service.updateGiftService(
           personData
         )
 
@@ -103,6 +102,7 @@ export default class GiftV1 {
           message: `Muito obrigado ${personName} por escolher um presente para o casal`,
           showBuyButton: !!personName,
           buyMessage: 'Gostaria de comprar agora?',
+          gifts,
         })
       }
     )

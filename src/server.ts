@@ -9,6 +9,6 @@ const prismaInstance = new PrismaClient()
 
 const giftService = new GiftV1Service(prismaInstance)
 
-const giftAPI = new GiftV1(fastifyInstance, prismaInstance, giftService)
+const giftAPI = new GiftV1(fastifyInstance, giftService)
 
 giftAPI.initializeListener()
