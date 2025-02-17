@@ -16,10 +16,11 @@ type GiftUpdate = {
 type PersonName = string | undefined
 
 export default class GiftV1Service {
-  private prisma
+  private readonly prisma
   constructor(prisma: PrismaClient) {
     this.prisma = prisma
   }
+
 
   public async createGiftService(gift: Gift) {
     try {
